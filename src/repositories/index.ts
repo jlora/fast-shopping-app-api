@@ -5,3 +5,4 @@ export * from './collections.repository';
 export * from './orders.repository';
 export * from './products.repository';
 export * from './shopping-cart-items.repository';
+export * from './customers.repository';

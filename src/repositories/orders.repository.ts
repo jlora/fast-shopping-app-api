@@ -1,9 +1,10 @@
 import {DefaultCrudRepository, repository, BelongsToAccessor, HasManyRepositoryFactory} from '@loopback/repository';
-import {Orders, OrdersRelations, Users, ShoppingCartItems} from '../models';
+import {Orders, OrdersRelations, Users, ShoppingCartItems, Customers} from '../models';
 import {ShoppingDataSource} from '../datasources';
 import {inject, Getter} from '@loopback/core';
 import {UsersRepository} from './users.repository';
 import {ShoppingCartItemsRepository} from './shopping-cart-items.repository';
+import {CustomersRepository} from './customers.repository';
 
 export class OrdersRepository extends DefaultCrudRepository<
   Orders,
@@ -15,10 +16,14 @@ export class OrdersRepository extends DefaultCrudRepository<
 
   public readonly shoppingCartItems: HasManyRepositoryFactory<ShoppingCartItems, typeof Orders.prototype.id>;
 
+  public readonly customer: BelongsToAccessor<Customers, typeof Orders.prototype.id>;
+
   constructor(
-    @inject('datasources.shopping') dataSource: ShoppingDataSource, @repository.getter('UsersRepository') protected usersRepositoryGetter: Getter<UsersRepository>, @repository.getter('ShoppingCartItemsRepository') protected shoppingCartItemsRepositoryGetter: Getter<ShoppingCartItemsRepository>,
+    @inject('datasources.shopping') dataSource: ShoppingDataSource, @repository.getter('UsersRepository') protected usersRepositoryGetter: Getter<UsersRepository>, @repository.getter('ShoppingCartItemsRepository') protected shoppingCartItemsRepositoryGetter: Getter<ShoppingCartItemsRepository>, @repository.getter('CustomersRepository') protected customersRepositoryGetter: Getter<CustomersRepository>,
   ) {
     super(Orders, dataSource);
+    this.customer = this.createBelongsToAccessorFor('customer', customersRepositoryGetter,);
+    this.registerInclusionResolver('customer', this.customer.inclusionResolver);
     this.shoppingCartItems = this.createHasManyRepositoryFactoryFor('shoppingCartItems', shoppingCartItemsRepositoryGetter,);
     this.registerInclusionResolver('shoppingCartItems', this.shoppingCartItems.inclusionResolver);
     this.user = this.createBelongsToAccessorFor('user', usersRepositoryGetter,);

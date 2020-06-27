@@ -18,3 +18,8 @@ export * from './orders-shopping-cart-items.controller';
 export * from './shopping-cart-items-orders.controller';
 export * from './shopping-cart-items-products.controller';
 export * from './shopping-cart-items-shopping-cart.controller';
+export * from './customers.controller';
+export * from './customers-orders.controller';
+export * from './orders-customers.controller';
+export * from './customers-shopping-cart.controller';
+export * from './shopping-cart-customers.controller';
