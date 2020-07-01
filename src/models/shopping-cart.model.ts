@@ -1,6 +1,7 @@
 import { belongsTo, Entity, model, property } from '@loopback/repository';
 import { Users } from './users.model';
 import {Customers} from './customers.model';
+import {Orders} from './orders.model';
 
 @model({
   settings: {idInjection: false, mysql: {schema: 'shopping', table: 'shopping_cart'}}
@@ -35,6 +36,9 @@ export class ShoppingCart extends Entity {
 
   @belongsTo(() => Customers)
   customerId: number;
+
+  @belongsTo(() => Orders)
+  orderId: number;
   // Define well-known properties here
 
   // Indexer property to allow additional data

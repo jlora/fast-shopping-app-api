@@ -23,3 +23,5 @@ export * from './customers-orders.controller';
 export * from './orders-customers.controller';
 export * from './customers-shopping-cart.controller';
 export * from './shopping-cart-customers.controller';
+export * from './shopping-cart-orders.controller';
+export * from './orders-shopping-cart.controller';
