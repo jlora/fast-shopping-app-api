@@ -63,7 +63,7 @@ export class OrdersRepository extends DefaultCrudRepository<Orders, typeof Order
 		console.log('data:', data);
 		// Verificar si el cliente existe, si no crearlo
 		let customer = { id: 0 };
-		if (data.customer) {
+		if (data.customer && data.customer.id) {
 			customer = await this.customerFunctions.findById(data.customer.id);
 		} else {
 			const customerItem = data.customer;
