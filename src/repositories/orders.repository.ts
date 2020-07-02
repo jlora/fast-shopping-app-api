@@ -7,6 +7,7 @@ import {
 	HasManyRepositoryFactory,
 	HasOneRepositoryFactory,
 	IsolationLevel,
+	NullType,
 	repository
 } from '@loopback/repository';
 import { ShoppingDataSource } from '../datasources';
@@ -87,7 +88,7 @@ export class OrdersRepository extends DefaultCrudRepository<Orders, typeof Order
 		}
 		const orderToSave = {
 			id: 0,
-			userId: data.user.id,
+			userId: data.user && data.user.id ? data.user.id : NullType,
 			total,
 			customerId: customer.id,
 			createdAt: new Date().toString()
@@ -97,7 +98,7 @@ export class OrdersRepository extends DefaultCrudRepository<Orders, typeof Order
 		// Guardar shopping cart
 		const shopCart = {
 			id: 0,
-			userId: data.user.id,
+			userId: data.user && data.user.id ? data.user.id : NullType,
 			orderId: order.id,
 			customerId: customer.id,
 			createdAt: new Date().toString()
